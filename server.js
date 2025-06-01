@@ -1,10 +1,17 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
-const app = require("./app");
+const  dotenv = require ("dotenv");
+dotenv.config();
+
+const app = require  ("./app.js");
+
+const PORT = process.env.PORT || 3000;
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.DB_URI)
   .then(() => {
-    app.listen(3000, () => console.log("Server running on port 3000"));
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
-  .catch((err) => console.error(err));
+  .catch((err) => {
+    console.error("Database error:", err.message);
+    process.exit(1);
+  });

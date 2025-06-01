@@ -1,24 +1,9 @@
-
-
-const express = require("express");
-const ctrl = require("../controllers/users");
-const auth = require("../middlewares/auth");
+import express from 'express';
+import auth from '../../middlewares/auth.js';
+import upload from '../../middlewares/upload.js';
+import updateAvatar from '../../controllers/users/avatars.js';
 
 const router = express.Router();
+router.patch('/avatars', auth, upload.single('avatar'), updateAvatar);
 
-
-router.post("/signup", ctrl.signup);
-
-
-router.post("/login", ctrl.login);
-
-
-router.get("/logout", auth, ctrl.logout);
-
-
-router.get("/current", auth, ctrl.current);
-
-
-router.patch("/", auth, ctrl.updateSubscription); 
-
-module.exports = router;
+export default router;
